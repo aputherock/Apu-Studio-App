@@ -994,7 +994,7 @@ section {
 
 /* Ripple Effect */
 .social-icon::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1089,7 +1089,8 @@ section {
 
 /* Pulse Animation (Optional - add to specific icons) */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -1103,7 +1104,7 @@ section {
 
 /* Glow Effect */
 .social-icon::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
