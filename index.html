@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Professional Cinematography & Photography Portfolio - Creative Visual Storytelling"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="" />
+    <title>Apu Studio | Visual Storyteller</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ========================================
+         PRELOADER
+    ======================================== -->
+    <div class="preloader">
+      <div class="preloader-logo">Apu Studio</div>
+    </div>
+
+    <!-- ========================================
+         NAVIGATION
+    ======================================== -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">Apu Studio</div>
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#cinematography" class="nav-link">Cinematography</a></li>
+          <li><a href="#photography" class="nav-link">Photography</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#music" class="nav-link">Musics</a></li>
+        </ul>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <!-- Theme Toggle with Real Logo using iframe -->
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <img
+              id="theme-icon"
+              src="brightness logo/light.svg"
+              alt="theme icon"
+              style="width: 24px; height: 24px"
+            />
+          </button>
+
+          <button class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ========================================
+         HERO SECTION
+    ======================================== -->
+    <section id="home" class="hero">
+      <div class="hero-bg">
+        <div
+          class="hero-slide active"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1920');
+          "
+        ></div>
+        <div
+          class="hero-slide"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1920');
+          "
+        ></div>
+        <div
+          class="hero-slide"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?w=1920');
+          "
+        ></div>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Visual Storyteller</h1>
+        <p class="hero-subtitle">
+          Capturing moments that transcend time through cinematic artistry
+        </p>
+        <div class="hero-cta">
+          <a href="#cinematography" class="btn btn-primary">View Work</a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         CINEMATOGRAPHY SECTION
+    ======================================== -->
+    <section id="cinematography">
+      <div class="container">
+        <h2 class="section-title reveal">Cinematography</h2>
+        <p class="section-subtitle reveal">Explore my visual narratives</p>
+
+        <!-- VIDEO CONFIGURATION AREA - ADD YOUR YOUTUBE LINKS HERE -->
+        <div class="video-grid" id="videoGrid"></div>
+      </div>
+    </section>
+    <!-- ========================================
+         MUSIC SECTION
+======================================== -->
+    <section id="music">
+      <div class="container">
+        <h2 class="section-title reveal">Musics</h2>
+        <p class="section-subtitle reveal">
+          A collection of my musical creations
+        </p>
+
+        <!-- MUSIC VIDEO GRID AREA -->
+        <div class="video-grid" id="musicGrid"></div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         PHOTOGRAPHY SECTION
+    ======================================== -->
+    <section id="photography">
+      <div class="container">
+        <h2 class="section-title reveal">Photography</h2>
+        <p class="section-subtitle reveal">Moments frozen in time</p>
+
+        <div class="photo-filters reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="portrait">Portrait</button>
+          <button class="filter-btn" data-filter="nature">Nature</button>
+          <button class="filter-btn" data-filter="street">Street</button>
+          <button class="filter-btn" data-filter="creative">Creative</button>
+        </div>
+
+        <!-- PHOTO CONFIGURATION AREA - ADD YOUR PHOTOS HERE -->
+        <div class="photo-grid" id="photoGrid"></div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         ABOUT SECTION
+    ======================================== -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title reveal">About Me</h2>
+        <p class="section-subtitle reveal">The artist behind the lens</p>
+
+        <div class="about-content reveal">
+          <div class="about-image">
+            <img src="About Picture/my picture.png" alt="About Me" />
+          </div>
+          <div class="about-text">
+            <h3>Creative Vision</h3>
+            <p>
+              With over a decade of experience in visual storytelling, I
+              specialize in creating compelling narratives through the art of
+              cinematography and photography. My work spans across commercial
+              projects, documentaries, and artistic endeavors.
+            </p>
+            <p>
+              Every frame tells a story, and I'm passionate about capturing
+              those fleeting moments that speak volumes. My approach combines
+              technical excellence with creative intuition to deliver visuals
+              that resonate.
+            </p>
+
+            <div class="about-stats">
+              <div class="stat-item">
+                <span class="stat-number">10+</span>
+                <span class="stat-label">Years Experience</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Projects</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Awards</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         TESTIMONIALS SECTION
+    ======================================== -->
+    <section id="testimonials">
+      <div class="container">
+        <h2 class="section-title reveal">Testimonials</h2>
+        <p class="section-subtitle reveal">What clients say</p>
+
+        <div class="testimonials-slider reveal">
+          <div class="testimonial-card active">
+            <p class="testimonial-text">
+              "Outstanding work! The cinematography exceeded all our
+              expectations. Every shot was perfectly composed and the final
+              product was breathtaking."
+            </p>
+            <p class="testimonial-author">Sarah Johnson</p>
+            <p class="testimonial-role">Creative Director, MediaCo</p>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">
+              "A true professional with an incredible eye for detail. The
+              photography work was stunning and captured exactly what we
+              envisioned."
+            </p>
+            <p class="testimonial-author">Michael Chen</p>
+            <p class="testimonial-role">CEO, TechStart</p>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">
+              "Absolutely phenomenal! The creative vision and execution were
+              flawless. Highly recommend for any visual storytelling needs."
+            </p>
+            <p class="testimonial-author">Emma Williams</p>
+            <p class="testimonial-role">Producer, FilmHouse Studios</p>
+          </div>
+
+          <div class="testimonial-nav">
+            <span class="testimonial-dot active"></span>
+            <span class="testimonial-dot"></span>
+            <span class="testimonial-dot"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         CONTACT SECTION
+    ======================================== -->
+    <section id="contact">
+      <div class="container contact-container">
+        <h2 class="section-title reveal">Get in Touch</h2>
+        <p class="section-subtitle reveal">
+          Let's create something amazing together
+        </p>
+
+        <form class="contact-form reveal" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+            <span class="form-error" id="nameError"
+              >Please enter your name</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+            <span class="form-error" id="emailError"
+              >Please enter a valid email</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+            <span class="form-error" id="messageError"
+              >Please enter a message</span
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer>
+      <p>
+        Developed by
+        <a href="mailto:apurbagoswami211@gmail.com"
+          >apurbagoswami211@gmail.com</a
+        >
+      </p>
+      <div class="social-links" style="margin-top: 1rem">
+        <a
+          href="https://www.youtube.com/@LISTENIFY123"
+          target="_blank"
+          class="social-icon"
+          aria-label="YouTube"
+        >
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/mr_apurba04/"
+          target="_blank"
+          class="social-icon"
+          aria-label="Instagram"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+
+        <a
+          href="https://www.facebook.com/apurba.goswami.31586"
+          target="_blank"
+          class="social-icon"
+          aria-label="Facebook"
+        >
+          <i class="fab fa-facebook"></i>
+        </a>
+
+        <a
+          href="https://wa.me/919547173980?text=Hello%20I%20am%20interested%20in%20your%20services"
+          target="_blank"
+          class="social-icon"
+          aria-label="WhatsApp"
+        >
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </footer>
+
+    <!-- ========================================
+         BACK TO TOP BUTTON
+    ======================================== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+      ↑
+    </button>
+
+    <!-- ========================================
+         VIDEO MODAL
+    ======================================== -->
+    <div class="modal" id="videoModal">
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">×</button>
+        <iframe
+          id="videoPlayer"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- ========================================
+         LIGHTBOX
+    ======================================== -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <img id="lightboxImage" src="" alt="" />
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
