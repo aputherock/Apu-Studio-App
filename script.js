@@ -3,7 +3,7 @@
       // ========================================
 
       // VIDEO CONFIGURATION - Add your YouTube video IDs here
-      const videos = [
+       const videos = [
         {
           id: "9zC1Cmmal80",
           title: "Heartwarming Anniversary Video 🎥✨ ||OFFICIAL VIDEO",
