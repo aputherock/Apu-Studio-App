@@ -28,6 +28,7 @@ const musicVideos = [
   { id: "Sd2fP06gSfM", title: "ANDHERA (Darkness)||  " },
   { id: "EP-zbXM_QxE", title: "Gali Ke King –" },
   { id: "-kKY-J9n8UY", title: "Mera Dil Toota ||  " },
+  { id: "gk15Eek9WQo", title: "Love Dose 💥||90's Bollywood style song ||  " },
 ];
 // Auto-generate Music Video Cards
 const musicGrid = document.getElementById("musicGrid");
@@ -59,7 +60,7 @@ const photos = [
     category: "creative",
   },
   { url: "photography/ashok .jpg", category: "portrait" },
-  { url: "photography/panjabi.jpg", category: "portrait" },
+  { url: "photography/Panjabi.jpg", category: "portrait" },
   { url: "photography/sun set 2.jpg", category: "nature" },
   { url: "photography/red flower.jpg", category: "street" },
   { url: "photography/moon.jpg", category: "creative" },
