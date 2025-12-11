@@ -59,11 +59,7 @@ const photos = [
     category: "creative",
   },
   { url: "photography/ashok .jpg", category: "portrait" },
-<<<<<<< HEAD
-  { url: "photography/Panjabi.jpg", category: "portrait" },
-=======
   { url: "photography/panjabi.jpg", category: "portrait" },
->>>>>>> 762dbf9f0eab8b6b89a7da46fa05f86efedff7bb
   { url: "photography/sun set 2.jpg", category: "nature" },
   { url: "photography/red flower.jpg", category: "street" },
   { url: "photography/moon.jpg", category: "creative" },
