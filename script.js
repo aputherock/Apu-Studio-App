@@ -55,10 +55,7 @@ const photos = [
   { url: "photography/street.jpg", category: "street" },
   { url: "photography/panskura college.jpg", category: "street" },
   { url: "photography/night.jpg", category: "creative" },
-  {
-    url: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600",
-    category: "creative",
-  },
+  { url: "photography/white flower.jpg",category: "creative"},
   { url: "photography/ashok .jpg", category: "portrait" },
   { url: "photography/panjabi.jpg", category: "portrait" },
   { url: "photography/sun set 2.jpg", category: "nature" },
