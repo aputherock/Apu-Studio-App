@@ -28,6 +28,7 @@ const musicVideos = [
   { id: "Sd2fP06gSfM", title: "ANDHERA (Darkness)||  " },
   { id: "EP-zbXM_QxE", title: "Gali Ke King –" },
   { id: "-kKY-J9n8UY", title: "Mera Dil Toota ||  " },
+   { id: "gk15Eek9WQo", title: "Love Dose 💥||90's Bollywood style song ||  " }
 ];
 // Auto-generate Music Video Cards
 const musicGrid = document.getElementById("musicGrid");
