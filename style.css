@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Berkshire+Swash&family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Calligraffitti&family=Caveat+Brush&family=Edu+SA+Hand:wght@400..700&family=Indie+Flower&family=Kalnia:wght@100..700&family=Kaushan+Script&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Michroma&family=Orbitron:wght@400..900&family=Play:wght@400;700&family=Playwrite+NO:wght@100..400&family=Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=WDXL+Lubrifont+TC&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Audiowide&family=Berkshire+Swash&family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Calligraffitti&family=Caveat+Brush&family=Edu+SA+Hand:wght@400..700&family=Geom:ital,wght@0,300..900;1,300..900&family=Indie+Flower&family=Kalnia:wght@100..700&family=Kaushan+Script&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Michroma&family=Oleo+Script:wght@400;700&family=Orbitron:wght@400..900&family=Play:wght@400;700&family=Playwrite+NO:wght@100..400&family=Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=WDXL+Lubrifont+TC&display=swap');
 
 /* ========================================
            GLOBAL STYLES & CSS VARIABLES
@@ -1309,4 +1309,10 @@ footer a:hover {
   .testimonial-text {
     font-size: 1.1rem;
   }
+}
+h5{
+  font-family: "Oleo Script", system-ui;
+  color: rgb(233, 39, 230);
+  letter-spacing: 0.1cap;
+  font-size: 18px;
 }
