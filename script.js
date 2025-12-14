@@ -4,6 +4,10 @@
 
 // VIDEO CONFIGURATION - Add your YouTube video IDs here
 const videos = [
+   {
+    id: "nF9DIkHcHD8",
+    title: "Cinematography 💥|| OFFICIAL VIDEO ||LISTENIFY #dhurandhar",
+  },
   {
     id: "9zC1Cmmal80",
     title: "Heartwarming Anniversary Video 🎥✨ ||OFFICIAL VIDEO",
@@ -19,6 +23,7 @@ const videos = [
 ];
 // MUSIC SECTION - Add your YouTube music video IDs here
 const musicVideos = [
+  { id: "gk15Eek9WQo", title: "Love Dose 💥||90's Bollywood style song ||  " },
   { id: "JNtTt0oioT8", title: "TERA INTEZAAR" },
   { id: "folFzqmf4WU", title: "TERA MERA PAYAAR" },
   { id: "IoyMTSysNjk", title: "TANHA DIL" },
@@ -28,7 +33,7 @@ const musicVideos = [
   { id: "Sd2fP06gSfM", title: "ANDHERA (Darkness)||  " },
   { id: "EP-zbXM_QxE", title: "Gali Ke King –" },
   { id: "-kKY-J9n8UY", title: "Mera Dil Toota ||  " },
-  { id: "gk15Eek9WQo", title: "Love Dose 💥||90's Bollywood style song ||  " }
+  
 ];
 // Auto-generate Music Video Cards
 const musicGrid = document.getElementById("musicGrid");
