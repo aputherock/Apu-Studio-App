@@ -4,7 +4,7 @@
            GLOBAL STYLES & CSS VARIABLES
         ======================================== */
 :root {
-  --bg-primary: #0a0a0a;
+  --bg-primary: #000000;
   --bg-secondary: #151515;
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
@@ -807,12 +807,10 @@ section {
   color: var(--accent);
 }
 
-.about-text p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
+.about-text {
+    text-align: justify;
+    line-height: 1.7;
+  }
 
 .about-stats {
   display: grid;
@@ -843,8 +841,13 @@ section {
 
 .stat-label {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color:rgb(131, 255, 253);
   margin-top: 0.5rem;
+  font-weight: bold;
+ font-family: "Lobster Two", sans-serif;
+letter-spacing: 1px;
+
+
 }
 
 /* ========================================
