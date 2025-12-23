@@ -2,9 +2,14 @@
 // CONFIGURATION AREA - EASY CUSTOMIZATION
 // ========================================
 
+// Initialize EmailJS
+(function () {
+  emailjs.init("mYfEJI7RvV0qw8XmZ"); // Your EmailJS public key
+})();
+
 // VIDEO CONFIGURATION - Add your YouTube video IDs here
 const videos = [
-   {
+  {
     id: "nF9DIkHcHD8",
     title: "Cinematography 💥|| OFFICIAL VIDEO ||LISTENIFY #dhurandhar",
   },
@@ -16,41 +21,25 @@ const videos = [
     id: "DtqF4SRmH0g",
     title: "Anniversary Teaser | A Special Celebration Awaits! 🎉✨",
   },
-  
   {
     id: "vKAFEPOtAlk",
-    title: "Adorable Baby Shoot | Cinematic Moments Captured in Pure Joy💘 ",
+    title: "Adorable Baby Shoot | Cinematic Moments Captured in Pure Joy💘",
   },
 ];
+
 // MUSIC SECTION - Add your YouTube music video IDs here
 const musicVideos = [
-  { id: "gk15Eek9WQo", title: "Love Dose 💥||90's Bollywood style song ||  " },
+  { id: "gk15Eek9WQo", title: "Love Dose 💥||90's Bollywood style song ||" },
   { id: "JNtTt0oioT8", title: "TERA INTEZAAR" },
   { id: "folFzqmf4WU", title: "TERA MERA PAYAAR" },
   { id: "IoyMTSysNjk", title: "TANHA DIL" },
-  { id: "5vfuRNapsM4", title: "TERI YAADON MAIN " },
-  { id: "emQOtvyQ3F8", title: "Teri Mushkaan - " },
-  { id: "wvLZ9DNwC84", title: "Apni Taqdeer:  " },
-  { id: "Sd2fP06gSfM", title: "ANDHERA (Darkness)||  " },
-  { id: "EP-zbXM_QxE", title: "Gali Ke King –" },
-  { id: "-kKY-J9n8UY", title: "Mera Dil Toota ||  " },
-  
+  { id: "5vfuRNapsM4", title: "TERI YAADON MAIN" },
+  { id: "emQOtvyQ3F8", title: "Teri Mushkaan -" },
+  { id: "wvLZ9DNwC84", title: "Apni Taqdeer:" },
+  { id: "Sd2fP06gSfM", title: "ANDHERA (Darkness)||" },
+  { id: "EP-zbXM_QxE", title: "Gali Ke King —" },
+  { id: "-kKY-J9n8UY", title: "Mera Dil Toota ||" },
 ];
-// Auto-generate Music Video Cards
-const musicGrid = document.getElementById("musicGrid");
-
-musicVideos.forEach((video) => {
-  musicGrid.innerHTML += `
-        <div class="video-card">
-            <iframe 
-                src="https://www.youtube.com/embed/${video.id}" 
-                frameborder="0" 
-                allowfullscreen>
-            </iframe>
-            <h3 class="video-title">${video.title}</h3>
-        </div>
-    `;
-});
 
 // PHOTO CONFIGURATION - Add your photo URLs and categories here
 const photos = [
@@ -61,7 +50,7 @@ const photos = [
   { url: "photography/street.jpg", category: "street" },
   { url: "photography/panskura college.jpg", category: "street" },
   { url: "photography/night.jpg", category: "creative" },
-  { url: "photography/white flower.jpg",category: "creative"},
+  { url: "photography/white flower.jpg", category: "creative" },
   { url: "photography/ashok .jpg", category: "portrait" },
   { url: "photography/Panjabi.jpg", category: "portrait" },
   { url: "photography/sun set 2.jpg", category: "nature" },
@@ -79,7 +68,7 @@ window.addEventListener("load", () => {
 });
 
 // ========================================
-/// THEME TOGGLE
+// THEME TOGGLE
 // ========================================
 const themeToggle = document.querySelector(".theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
@@ -87,7 +76,6 @@ const themeIcon = document.getElementById("theme-icon");
 const savedTheme = localStorage.getItem("theme") || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
-// Set initial icon
 themeIcon.src =
   savedTheme === "dark"
     ? "brightness logo/dark.png"
@@ -100,13 +88,13 @@ themeToggle.addEventListener("click", () => {
   document.documentElement.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
 
-  // Change icon for light/dark mode
   themeIcon.src =
     newTheme === "dark"
       ? "brightness logo/dark.png"
       : "brightness logo/light.svg";
 });
 
+// ========================================
 // MOBILE MENU
 // ========================================
 const menuToggle = document.querySelector(".menu-toggle");
@@ -136,7 +124,6 @@ window.addEventListener("scroll", () => {
     navbar.classList.remove("scrolled");
   }
 
-  // Active nav link
   const sections = document.querySelectorAll("section");
   const navLinksAll = document.querySelectorAll(".nav-link");
 
@@ -185,27 +172,64 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
 // ========================================
-// VIDEO GRID GENERATION
+// HORIZONTAL SLIDING VIDEO GRID (CINEMATOGRAPHY)
 // ========================================
 const videoGrid = document.getElementById("videoGrid");
 
-videos.forEach((video) => {
+// Duplicate videos for infinite loop
+const allVideos = [...videos, ...videos];
+
+allVideos.forEach((video, index) => {
   const videoCard = document.createElement("div");
-  videoCard.className = "video-card";
+  videoCard.className = "video-card-slider";
   videoCard.innerHTML = `
-                <img src="https://img.youtube.com/vi/${video.id}/maxresdefault.jpg" 
-                     alt="${video.title}" 
-                     class="video-thumbnail" 
-                     loading="lazy">
-                <div class="video-overlay">
-                    <div class="play-icon">▶</div>
-                </div>
-                <div class="video-title">${video.title}</div>
-            `;
+    <img src="https://img.youtube.com/vi/${video.id}/maxresdefault.jpg" 
+         alt="${video.title}" 
+         class="video-thumbnail" 
+         loading="lazy">
+    <div class="video-overlay">
+      <div class="play-icon">▶</div>
+    </div>
+    <div class="video-title">${video.title}</div>
+  `;
 
   videoCard.addEventListener("click", () => openVideo(video.id));
   videoGrid.appendChild(videoCard);
 });
+
+// Apply horizontal slider styles
+videoGrid.style.display = "flex";
+videoGrid.style.gap = "2rem";
+videoGrid.style.animation = "slideHorizontal 40s linear infinite";
+videoGrid.style.width = "max-content";
+
+// ========================================
+// HORIZONTAL SLIDING MUSIC GRID
+// ========================================
+const musicGrid = document.getElementById("musicGrid");
+
+const allMusicVideos = [...musicVideos, ...musicVideos];
+
+allMusicVideos.forEach((video) => {
+  const musicCard = document.createElement("div");
+  musicCard.className = "music-card-slider";
+  musicCard.innerHTML = `
+    <div class="music-embed-wrapper">
+      <iframe 
+        src="https://www.youtube.com/embed/${video.id}" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </div>
+    <h3 class="video-title">${video.title}</h3>
+  `;
+  musicGrid.appendChild(musicCard);
+});
+
+musicGrid.style.display = "flex";
+musicGrid.style.gap = "1.5rem";
+musicGrid.style.animation = "slideHorizontal 50s linear infinite";
+musicGrid.style.width = "max-content";
 
 // ========================================
 // VIDEO MODAL
@@ -232,7 +256,7 @@ videoModal.addEventListener("click", (e) => {
 });
 
 // ========================================
-// PHOTO GRID GENERATION
+// HORIZONTAL SLIDING PHOTO GRID
 // ========================================
 const photoGrid = document.getElementById("photoGrid");
 
@@ -241,18 +265,26 @@ function renderPhotos(filter = "all") {
   const filteredPhotos =
     filter === "all" ? photos : photos.filter((p) => p.category === filter);
 
-  filteredPhotos.forEach((photo) => {
+  // Duplicate for infinite loop
+  const allPhotos = [...filteredPhotos, ...filteredPhotos];
+
+  allPhotos.forEach((photo) => {
     const photoCard = document.createElement("div");
-    photoCard.className = "photo-card";
+    photoCard.className = "photo-card-slider";
     photoCard.setAttribute("data-category", photo.category);
     photoCard.innerHTML = `
-                    <img src="${photo.url}" alt="${photo.category}" loading="lazy">
-                    <div class="photo-category-label">${photo.category}</div>
-                `;
+      <img src="${photo.url}" alt="${photo.category}" loading="lazy">
+      <div class="photo-category-label">${photo.category}</div>
+    `;
 
     photoCard.addEventListener("click", () => openLightbox(photo.url));
     photoGrid.appendChild(photoCard);
   });
+
+  photoGrid.style.display = "flex";
+  photoGrid.style.gap = "1.5rem";
+  photoGrid.style.animation = "slideHorizontal 45s linear infinite";
+  photoGrid.style.width = "max-content";
 }
 
 renderPhotos();
@@ -321,61 +353,26 @@ setInterval(() => {
 }, 5000);
 
 // ========================================
-// CONTACT FORM VALIDATION & EMAIL SUBMISSION
-// ========================================
-const contactForm = document.getElementById("contactForm");
+//Send Message
+(function () {
+  emailjs.init({
+    publicKey: "p0hzlblVUGOgTnrBC",
+  });
+})();
 
-contactForm.addEventListener("submit", (e) => {
+document.getElementById("contactForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
-
-  let isValid = true;
-
-  // Name validation
-  if (name === "") {
-    document.getElementById("nameError").style.display = "block";
-    isValid = false;
-  } else {
-    document.getElementById("nameError").style.display = "none";
-  }
-
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    document.getElementById("emailError").style.display = "block";
-    isValid = false;
-  } else {
-    document.getElementById("emailError").style.display = "none";
-  }
-
-  // Message validation
-  if (message === "") {
-    document.getElementById("messageError").style.display = "block";
-    isValid = false;
-  } else {
-    document.getElementById("messageError").style.display = "none";
-  }
-
-  if (isValid) {
-    // Create mailto link with form data
-    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-    );
-    const mailtoLink = `mailto:apurbagoswami211@gmail.com?subject=${subject}&body=${body}`;
-
-    // Open email client
-    window.location.href = mailtoLink;
-
-    // Show success message
-    alert(
-      "Thank you for your message! Your email client will open to send the message."
-    );
-    contactForm.reset();
-  }
+  emailjs.sendForm("service_1qpn3m5", "template_nqyae7p", this).then(
+    () => {
+      alert("✅ Message sent successfully!");
+      this.reset();
+    },
+    (error) => {
+      alert("❌ Failed to send message");
+      console.error("EmailJS Error:", error);
+    }
+  );
 });
 
 // ========================================
