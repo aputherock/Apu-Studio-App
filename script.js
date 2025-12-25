@@ -54,7 +54,7 @@ const photos = [
 
 // ========================================
 // CHRISTMAS POPUP (AUTO LOAD)
-// CHRISTMAS POPUP (BROWSER SAFE VERSION)
+/// CHRISTMAS POPUP - FAST AUDIO LOAD
 // ========================================
 let christmasAudio;
 
@@ -62,42 +62,41 @@ window.addEventListener("load", () => {
   const popup = document.getElementById("christmasPopup");
   const closeBtn = document.getElementById("christmasClose");
 
-  // Create audio
+  // 🔥 Create audio & preload
   christmasAudio = new Audio("Audio/bg songs.mp3");
   christmasAudio.loop = true;
   christmasAudio.volume = 0.6;
-  christmasAudio.muted = true; // 🔥 KEY POINT
+  christmasAudio.preload = "auto"; // 🚀 KEY FIX
+
+  // Force browser to start loading audio
+  christmasAudio.load();
 
   // Show popup
   setTimeout(() => {
     popup.classList.add("active");
-
-    // Autoplay muted (browser allows)
-    christmasAudio.play().catch(() => {
-      console.log("Muted autoplay blocked (rare)");
-    });
   }, 1200);
 
-  // 👉 Any click on popup = enable sound
-  popup.addEventListener("click", () => {
-    if (christmasAudio.muted) {
-      christmasAudio.muted = false;
-      console.log("Sound enabled by user");
-    }
-  });
+  // First user interaction → play instantly
+  document.addEventListener(
+    "click",
+    function playOnce() {
+      christmasAudio
+        .play()
+        .then(() => console.log("Music playing instantly"))
+        .catch((e) => console.log("Play blocked", e));
 
-  // ❌ Close popup = STOP MUSIC COMPLETELY
-  closeBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // VERY IMPORTANT
+      document.removeEventListener("click", playOnce);
+    },
+    { once: true }
+  );
 
+  // Close popup → stop music
+  closeBtn.addEventListener("click", () => {
     popup.classList.remove("active");
-
     christmasAudio.pause();
     christmasAudio.currentTime = 0;
-    christmasAudio.muted = true;
   });
 });
-
 
 
 // ========================================
