@@ -22,6 +22,35 @@
   </head>
   <body>
     <!-- ========================================
+         CHRISTMAS WELCOME POPUP
+    ======================================== -->
+    <div class="christmas-popup" id="christmasPopup">
+      <div class="christmas-popup-content">
+        <button class="christmas-close" id="christmasClose">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="christmas-text">
+          <h1 class="christmas-title">🎄 Merry Christmas 🎄</h1>
+          <h2 class="christmas-subtitle">✨ Happy New Year 2025 ✨</h2>
+          <p class="christmas-message">Welcome to Apu Studio</p>
+        </div>
+        <div class="snowflakes" aria-hidden="true">
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================
          PRELOADER
     ======================================== -->
     <div class="preloader">
@@ -44,7 +73,6 @@
           <li><a href="#music" class="nav-link">Musics</a></li>
         </ul>
         <div style="display: flex; gap: 1rem; align-items: center">
-          <!-- Theme Toggle with Real Logo using iframe -->
           <button class="theme-toggle" aria-label="Toggle theme">
             <img
               id="theme-icon"
@@ -70,28 +98,19 @@
       <div class="hero-bg">
         <div
           class="hero-slide active"
-          style="
-            background-image: url('Slide image/slide1.jpeg');
-          "
+          style="background-image: url('Slide image/slide1.png');"
         ></div>
         <div
           class="hero-slide"
-          style="
-            background-image: url('Slide image/slide2.jpg');
-          "
+          style="background-image: url('Slide image/slide2.png');"
         ></div>
         <div
           class="hero-slide"
-          style="
-            background-image: url('Slide image/slide3.jpg');
-          "
+          style="background-image: url('Slide image/slide3.png');"
         ></div>
-        
-         <div
+        <div
           class="hero-slide"
-          style="
-            background-image: url('Slide image/slide5.jpg');
-          "
+          style="background-image: url('Slide image/slide5.png');"
         ></div>
       </div>
       <div class="hero-overlay"></div>
@@ -114,25 +133,54 @@
       <div class="container">
         <h2 class="section-title reveal">Cinematography</h2>
         <p class="section-subtitle reveal">Explore my visual narratives</p>
-
-        <!-- VIDEO CONFIGURATION AREA - ADD YOUR YOUTUBE LINKS HERE -->
         <div class="video-grid" id="videoGrid"></div>
       </div>
     </section>
+
     <!-- ========================================
          MUSIC SECTION
-======================================== -->
+    ======================================== -->
     <section id="music">
       <div class="container">
         <h2 class="section-title reveal">Musics</h2>
         <p class="section-subtitle reveal">
           A collection of my musical creations
         </p>
-
-        <!-- MUSIC VIDEO GRID AREA -->
         <div class="video-grid" id="musicGrid"></div>
       </div>
     </section>
+
+    <!-- ========================================
+         MUSIC POPUP PLAYER
+    ======================================== -->
+    <div class="music-popup" id="musicPopup">
+      <div class="music-popup-content">
+        <button class="music-popup-close" id="musicPopupClose">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="music-popup-info">
+          <h3 id="currentSongTitle">Song Title</h3>
+          <div class="music-controls">
+            <button class="music-control-btn" id="playPauseBtn">
+              <i class="fas fa-play"></i>
+            </button>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <input type="range" class="progress-input" id="progressInput" min="0" max="100" value="0">
+          </div>
+          <div class="time-display">
+            <span id="currentTime">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
+          <div class="volume-container">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+          </div>
+        </div>
+        <iframe id="musicPlayer" allow="autoplay" style="display: none;"></iframe>
+      </div>
+    </div>
 
     <!-- ========================================
          PHOTOGRAPHY SECTION
@@ -150,7 +198,6 @@
           <button class="filter-btn" data-filter="creative">Creative</button>
         </div>
 
-        <!-- PHOTO CONFIGURATION AREA - ADD YOUR PHOTOS HERE -->
         <div class="photo-grid" id="photoGrid"></div>
       </div>
     </section>
@@ -205,6 +252,9 @@
 
         <div class="testimonials-slider reveal">
           <div class="testimonial-card active">
+            <div class="testimonial-image">
+              <img src="https://ui-avatars.com/api/?name=Sudipta+Bera&background=ff6b35&color=fff&size=80" alt="Sudipta Bera">
+            </div>
             <p class="testimonial-text">
               "Outstanding work! The cinematography exceeded all our
               expectations. Every shot was perfectly composed and the final
@@ -214,6 +264,9 @@
             <p class="testimonial-role">Student Of MSC</p>
           </div>
           <div class="testimonial-card">
+            <div class="testimonial-image">
+              <img src="https://ui-avatars.com/api/?name=Arun+Goswami&background=ff6b35&color=fff&size=80" alt="Arun Goswami">
+            </div>
             <p class="testimonial-text">
               "A true professional with an incredible eye for detail. The
               photography work was stunning and captured exactly what we
@@ -223,6 +276,9 @@
             <p class="testimonial-role">Rural Healthcare Provider</p>
           </div>
           <div class="testimonial-card">
+            <div class="testimonial-image">
+              <img src="https://ui-avatars.com/api/?name=Dipan+Mukharjee&background=ff6b35&color=fff&size=80" alt="Dipan Mukharjee">
+            </div>
             <p class="testimonial-text">
               "Absolutely phenomenal! The creative vision and execution were
               flawless. Highly recommend for any visual storytelling needs."
@@ -230,7 +286,7 @@
             <p class="testimonial-author">Mr. Dipan Mukharjee</p>
             <p class="testimonial-role">Photographer||Worked At TATA Steel</p>
           </div>
-        <div class="testimonial-nav">
+          <div class="testimonial-nav">
             <span class="testimonial-dot active"></span>
             <span class="testimonial-dot"></span>
             <span class="testimonial-dot"></span>
@@ -251,86 +307,63 @@
 
         <form class="contact-form reveal" id="contactForm">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required />
-            <span class="form-error" id="nameError"
-              >Please enter your name</span
-            >
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="from_name" placeholder="Enter your full name" required />
           </div>
 
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
-            <span class="form-error" id="emailError"
-              >Please enter a valid email</span
-            >
+            <label for="email">Your Email *</label>
+            <input type="email" id="email" name="from_email" placeholder="your.email@example.com" required />
           </div>
 
           <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required></textarea>
-            <span class="form-error" id="messageError"
-              >Please enter a message</span
-            >
+            <label for="message">Your Message *</label>
+            <textarea id="message" name="message" placeholder="Write your message here..." rows="6" required></textarea>
           </div>
 
           <button type="submit" class="btn btn-primary" style="width: 100%">
-            Send Message
+            <i class="fas fa-paper-plane"></i> Send Message
           </button>
+          
+          <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+            📧 Messages will be sent to: <strong style="color: var(--accent);">apurbagoswami211@gmail.com</strong>
+          </p>
         </form>
       </div>
     </section> -->
 
-    <!-- Update your FOOTER section to this: -->
-<footer>
-  <div class="footer-slider-wrapper">
-    <div class="footer-slider">
-      <span class="footer-text">APU STUDIO • APU STUDIO • APU STUDIO • </span>
-      <span class="footer-text">APU STUDIO • APU STUDIO • APU STUDIO • </span>
-    </div>
-  </div>
-  <p>
-    Developed by <h5>Mr. Apurba Goswami</h5>
-    <a href="mailto:apurbagoswami211@gmail.com">apurbagoswami211@gmail.com</a>
-  </p>
-  <div class="social-links" style="margin-top: 1rem">
-    <a
-      href="https://www.youtube.com/@LISTENIFY123"
-      target="_blank"
-      class="social-icon"
-      aria-label="YouTube"
-    >
-      <i class="fab fa-youtube"></i>
-    </a>
-    <a
-      href="https://www.instagram.com/mr_apurba04/"
-      target="_blank"
-      class="social-icon"
-      aria-label="Instagram"
-    >
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a
-      href="https://www.facebook.com/apurba.goswami.31586"
-      target="_blank"
-      class="social-icon"
-      aria-label="Facebook"
-    >
-      <i class="fab fa-facebook"></i>
-    </a>
-    <a
-      href="https://wa.me/919547173980?text=Hello%20I%20am%20interested%20in%20your%20services"
-      target="_blank"
-      class="social-icon"
-      aria-label="WhatsApp"
-    >
-      <i class="fab fa-whatsapp"></i>
-    </a>
-  </div>
-  <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem">
-    © 2025 Apu Studio. All Rights Reserved.
-  </p>
-</footer>
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer>
+      <div class="footer-slider-wrapper">
+        <div class="footer-slider">
+          <span class="footer-text">APU STUDIO • APU STUDIO • APU STUDIO • </span>
+          <span class="footer-text">APU STUDIO • APU STUDIO • APU STUDIO • </span>
+        </div>
+      </div>
+      <p>
+        Developed by <h5>Mr. Apurba Goswami</h5>
+        <a href="mailto:apurbagoswami211@gmail.com">apurbagoswami211@gmail.com</a>
+      </p>
+      <div class="social-links" style="margin-top: 1rem">
+        <a href="https://www.youtube.com/@LISTENIFY123" target="_blank" class="social-icon" aria-label="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.instagram.com/mr_apurba04/" target="_blank" class="social-icon" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/apurba.goswami.31586" target="_blank" class="social-icon" aria-label="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://wa.me/919547173980?text=Hello%20I%20am%20interested%20in%20your%20services" target="_blank" class="social-icon" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem">
+        © 2025 Apu Studio. All Rights Reserved.
+      </p>
+    </footer>
 
     <!-- ========================================
          BACK TO TOP BUTTON
@@ -362,38 +395,22 @@
         <img id="lightboxImage" src="" alt="" />
       </div>
     </div>
-    <!-- Add this right before closing </body> tag (after footer, before scripts) -->
 
-<!-- FLOATING SOCIAL ICONS -->
-<div class="social-floating-icons">
-  <a
-    href="https://wa.me/919547173980?text=Hey,%20I%20am%20interested%20in%20your%20services"
-    target="_blank"
-    class="social-icon"
-    aria-label="WhatsApp"
-    style="background: linear-gradient(135deg, #25d366, #1da851)"
-  >
-    <i class="fab fa-whatsapp"></i>
-  </a>
-  <a
-    href="https://www.instagram.com/mr_apurba04/"
-    target="_blank"
-    class="social-icon"
-    aria-label="Instagram"
-    style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)"
-  >
-    <i class="fab fa-instagram"></i>
-  </a>
-  <a
-    href="https://www.youtube.com/@LISTENIFY123"
-    target="_blank"
-    class="social-icon"
-    aria-label="YouTube"
-    style="background: linear-gradient(135deg, #ff0000, #cc0000)"
-  >
-    <i class="fab fa-youtube"></i>
-  </a>
-</div>
+    <!-- ========================================
+         FLOATING SOCIAL ICONS
+    ======================================== -->
+    <div class="social-floating-icons">
+      <a href="https://wa.me/919547173980?text=Hey,%20I%20am%20interested%20in%20your%20services" target="_blank" class="social-icon" aria-label="WhatsApp" style="background: linear-gradient(135deg, #25d366, #1da851)">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://www.instagram.com/mr_apurba04/" target="_blank" class="social-icon" aria-label="Instagram" style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/@LISTENIFY123" target="_blank" class="social-icon" aria-label="YouTube" style="background: linear-gradient(135deg, #ff0000, #cc0000)">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
