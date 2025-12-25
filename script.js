@@ -234,8 +234,10 @@ videoGrid.style.animation = "slideHorizontal 40s linear infinite";
 videoGrid.style.width = "max-content";
 
 // ========================================
-// MUSIC SECTION WITH POPUP PLAYER
 // ========================================
+// MUSIC SECTION WITH POPUP PLAYER (EDITED FOR SMOOTH LOAD)
+// ========================================
+
 const musicGrid = document.getElementById("musicGrid");
 const musicPopup = document.getElementById("musicPopup");
 const musicPopupClose = document.getElementById("musicPopupClose");
@@ -253,10 +255,16 @@ let isPlaying = false;
 let currentPlayer = null;
 let progressInterval = null;
 
-// Render music cards
-const allMusicVideos = [...musicVideos, ...musicVideos];
+// Add a thumbnail overlay for instant feel
+const loadingThumbnail = document.createElement("img");
+loadingThumbnail.id = "loadingThumbnail";
+loadingThumbnail.style.width = "100%";
+loadingThumbnail.style.height = "100%";
+loadingThumbnail.style.objectFit = "cover";
+musicPlayer.appendChild(loadingThumbnail);
 
-allMusicVideos.forEach((video) => {
+// Render music cards
+musicVideos.forEach((video) => {
   const musicCard = document.createElement("div");
   musicCard.className = "music-card-slider";
   musicCard.innerHTML = `
@@ -286,32 +294,24 @@ function formatTime(seconds) {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-// Start progress tracking
+// Progress tracking
 function startProgressTracking() {
   if (progressInterval) clearInterval(progressInterval);
-  
   progressInterval = setInterval(() => {
-    if (currentPlayer && currentPlayer.getDuration) {
-      try {
-        const currentTime = currentPlayer.getCurrentTime();
-        const duration = currentPlayer.getDuration();
-        
-        if (duration > 0) {
-          const progress = (currentTime / duration) * 100;
-          progressBar.style.width = progress + "%";
-          progressInput.value = progress;
-          
-          currentTimeEl.textContent = formatTime(currentTime);
-          durationEl.textContent = formatTime(duration);
-        }
-      } catch (e) {
-        // Player not ready yet
+    if (currentPlayer && currentPlayer.getCurrentTime && currentPlayer.getDuration) {
+      const currentTime = currentPlayer.getCurrentTime();
+      const duration = currentPlayer.getDuration();
+      if (duration > 0) {
+        const progress = (currentTime / duration) * 100;
+        progressBar.style.width = progress + "%";
+        progressInput.value = progress;
+        currentTimeEl.textContent = formatTime(currentTime);
+        durationEl.textContent = formatTime(duration);
       }
     }
   }, 500);
 }
 
-// Stop progress tracking
 function stopProgressTracking() {
   if (progressInterval) {
     clearInterval(progressInterval);
@@ -323,100 +323,96 @@ function stopProgressTracking() {
   durationEl.textContent = "0:00";
 }
 
+// Load YouTube API
+function loadYouTubeAPI(callback) {
+  if (window.YT && window.YT.Player) {
+    callback();
+  } else {
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+    window.onYouTubeIframeAPIReady = callback;
+  }
+}
+
+// Create YouTube Player
+function createPlayer(videoId) {
+  if (currentPlayer) {
+    currentPlayer.destroy();
+    currentPlayer = null;
+  }
+
+  loadingThumbnail.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  loadingThumbnail.style.display = "block";
+
+  musicPlayer.innerHTML = "";
+  musicPlayer.appendChild(loadingThumbnail);
+
+  const playerDiv = document.createElement("div");
+  playerDiv.id = "ytplayer";
+  musicPlayer.appendChild(playerDiv);
+
+  currentPlayer = new YT.Player("ytplayer", {
+    height: "0",
+    width: "0",
+    videoId: videoId,
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      modestbranding: 1,
+      rel: 0,
+      mute: 1 // mute initially to allow instant autoplay
+    },
+    events: {
+      onReady: function (event) {
+        event.target.playVideo();
+        isPlaying = true;
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        startProgressTracking();
+        event.target.setVolume(volumeSlider.value);
+        // hide thumbnail after short delay
+        setTimeout(() => loadingThumbnail.style.display = "none", 300);
+      },
+      onStateChange: function (event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+          isPlaying = true;
+          playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          startProgressTracking();
+        } else if (event.data === YT.PlayerState.PAUSED) {
+          isPlaying = false;
+          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        } else if (event.data === YT.PlayerState.ENDED) {
+          isPlaying = false;
+          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+          stopProgressTracking();
+        }
+      }
+    }
+  });
+}
+
 // Open music popup
 function openMusicPopup(videoId, title) {
   currentMusicId = videoId;
   currentSongTitle.textContent = title;
   musicPopup.classList.add("active");
   document.body.style.overflow = "hidden";
-  
-  // Load YouTube Player API if not already loaded
-  if (!window.YT) {
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  }
-  
-  // Wait for API and create player
-  setTimeout(() => {
-    if (currentPlayer) {
-      currentPlayer.destroy();
-    }
-    
-    // Create a container for the player
-    musicPlayer.innerHTML = "";
-    const playerDiv = document.createElement("div");
-    playerDiv.id = "ytplayer";
-    musicPlayer.appendChild(playerDiv);
-    
-    if (window.YT && window.YT.Player) {
-      currentPlayer = new YT.Player('ytplayer', {
-        height: '0',
-        width: '0',
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-        },
-        events: {
-          onReady: function(event) {
-            event.target.playVideo();
-            isPlaying = true;
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            startProgressTracking();
-            
-            // Set volume
-            const volume = volumeSlider.value;
-            event.target.setVolume(volume);
-          },
-          onStateChange: function(event) {
-            if (event.data === YT.PlayerState.PLAYING) {
-              isPlaying = true;
-              playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-              startProgressTracking();
-            } else if (event.data === YT.PlayerState.PAUSED) {
-              isPlaying = false;
-              playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            } else if (event.data === YT.PlayerState.ENDED) {
-              isPlaying = false;
-              playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-              stopProgressTracking();
-            }
-          }
-        }
-      });
-    } else {
-      // Fallback: use iframe embed
-      musicPlayer.innerHTML = `<iframe id="ytplayer" width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&enablejsapi=1" allow="autoplay" frameborder="0"></iframe>`;
-      isPlaying = true;
-      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-      
-      // Simulated progress (since we can't access iframe data without API)
-      let simulatedTime = 0;
-      progressInterval = setInterval(() => {
-        simulatedTime += 0.5;
-        const simulatedDuration = 180; // assume 3 minutes
-        const progress = (simulatedTime / simulatedDuration) * 100;
-        progressBar.style.width = Math.min(progress, 100) + "%";
-        progressInput.value = Math.min(progress, 100);
-        currentTimeEl.textContent = formatTime(simulatedTime);
-        durationEl.textContent = formatTime(simulatedDuration);
-      }, 500);
-    }
-  }, 500);
+
+  loadYouTubeAPI(() => {
+    createPlayer(videoId);
+  });
 }
 
 // Close music popup
 function closeMusicPopup() {
   musicPopup.classList.remove("active");
   document.body.style.overflow = "auto";
-  
+
   if (currentPlayer && currentPlayer.stopVideo) {
     currentPlayer.stopVideo();
     currentPlayer.destroy();
   }
-  
+
   musicPlayer.innerHTML = "";
   currentPlayer = null;
   currentMusicId = null;
@@ -432,16 +428,16 @@ musicPopup.addEventListener("click", (e) => {
 
 // Play/Pause toggle
 playPauseBtn.addEventListener("click", () => {
-  if (currentPlayer && currentPlayer.getPlayerState) {
-    if (isPlaying) {
-      currentPlayer.pauseVideo();
-      isPlaying = false;
-      playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-    } else {
-      currentPlayer.playVideo();
-      isPlaying = true;
-      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    }
+  if (!currentPlayer) return;
+  if (isPlaying) {
+    currentPlayer.pauseVideo();
+    isPlaying = false;
+    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+  } else {
+    currentPlayer.playVideo();
+    currentPlayer.unMute(); // unmute after user interaction
+    isPlaying = true;
+    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
   }
 });
 
@@ -449,18 +445,20 @@ playPauseBtn.addEventListener("click", () => {
 progressInput.addEventListener("input", (e) => {
   if (currentPlayer && currentPlayer.getDuration) {
     const duration = currentPlayer.getDuration();
-    const seekTime = (e.target.value / 100) * duration;
-    currentPlayer.seekTo(seekTime, true);
+    if (duration > 0) {
+      const seekTime = (e.target.value / 100) * duration;
+      currentPlayer.seekTo(seekTime, true);
+    }
   }
 });
 
 // Volume control
 volumeSlider.addEventListener("input", (e) => {
-  const volume = e.target.value;
   if (currentPlayer && currentPlayer.setVolume) {
-    currentPlayer.setVolume(volume);
+    currentPlayer.setVolume(e.target.value);
   }
 });
+
 
 // ========================================
 // VIDEO MODAL
