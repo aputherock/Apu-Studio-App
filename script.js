@@ -237,6 +237,8 @@ videoGrid.style.width = "max-content";
 // ========================================
 // MUSIC SECTION WITH POPUP PLAYER (EDITED FOR SMOOTH LOAD)
 // ========================================
+// MUSIC SECTION WITH POPUP PLAYER (MOBILE-FRIENDLY)
+// ========================================
 
 const musicGrid = document.getElementById("musicGrid");
 const musicPopup = document.getElementById("musicPopup");
@@ -255,7 +257,7 @@ let isPlaying = false;
 let currentPlayer = null;
 let progressInterval = null;
 
-// Add a thumbnail overlay for instant feel
+// Thumbnail overlay for instant feel
 const loadingThumbnail = document.createElement("img");
 loadingThumbnail.id = "loadingThumbnail";
 loadingThumbnail.style.width = "100%";
@@ -294,7 +296,7 @@ function formatTime(seconds) {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-// Progress tracking
+// Start progress tracking
 function startProgressTracking() {
   if (progressInterval) clearInterval(progressInterval);
   progressInterval = setInterval(() => {
@@ -312,6 +314,7 @@ function startProgressTracking() {
   }, 500);
 }
 
+// Stop progress tracking
 function stopProgressTracking() {
   if (progressInterval) {
     clearInterval(progressInterval);
@@ -361,7 +364,7 @@ function createPlayer(videoId) {
       controls: 0,
       modestbranding: 1,
       rel: 0,
-      mute: 1 // mute initially to allow instant autoplay
+      mute: 1 // muted initially to allow autoplay on mobile
     },
     events: {
       onReady: function (event) {
@@ -370,8 +373,12 @@ function createPlayer(videoId) {
         playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
         startProgressTracking();
         event.target.setVolume(volumeSlider.value);
-        // hide thumbnail after short delay
+
+        // hide thumbnail shortly after ready
         setTimeout(() => loadingThumbnail.style.display = "none", 300);
+
+        // immediately unmute for mobile after user click (interaction)
+        if (event.target.unMute) event.target.unMute();
       },
       onStateChange: function (event) {
         if (event.data === YT.PlayerState.PLAYING) {
@@ -435,7 +442,7 @@ playPauseBtn.addEventListener("click", () => {
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
   } else {
     currentPlayer.playVideo();
-    currentPlayer.unMute(); // unmute after user interaction
+    currentPlayer.unMute(); // ensure sound on mobile
     isPlaying = true;
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
   }
@@ -458,6 +465,7 @@ volumeSlider.addEventListener("input", (e) => {
     currentPlayer.setVolume(e.target.value);
   }
 });
+
 
 
 // ========================================
