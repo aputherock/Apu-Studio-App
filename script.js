@@ -2,16 +2,8 @@
 // CONFIGURATION AREA - EASY CUSTOMIZATION
 // ========================================
 
-// Initialize EmailJS - IMPORTANT: Replace with YOUR EmailJS credentials
-// (function () {
-//   // Your EmailJS Public Key
-//   emailjs.init("mYfEJI7RvV0qw8XmZ");
-// })();
-
-// // EmailJS Configuration
-// const EMAILJS_SERVICE_ID = "service_1qpn3m5";
-// const EMAILJS_TEMPLATE_ID = "template_nqyae7p";
-// const YOUR_EMAIL = "apurbagoswami211@gmail.com";
+// YOUR EMAIL ADDRESS
+const YOUR_EMAIL = "apurbagoswami211@gmail.com";
 
 // VIDEO CONFIGURATION
 const videos = [
@@ -54,50 +46,57 @@ const photos = [
 
 // ========================================
 // CHRISTMAS POPUP (AUTO LOAD)
-/// CHRISTMAS POPUP - FAST AUDIO LOAD
 // ========================================
-let christmasAudio;
+let christmasAudio = null;
 
 window.addEventListener("load", () => {
-  const popup = document.getElementById("christmasPopup");
-  const closeBtn = document.getElementById("christmasClose");
-
-  // 🔥 Create audio & preload
-  christmasAudio = new Audio("Audio/bg songs.mp3");
+  const christmasPopup = document.getElementById("christmasPopup");
+  const christmasClose = document.getElementById("christmasClose");
+  
+  // Create audio element
+  christmasAudio = new Audio();
+  christmasAudio.src = "Audio/bg songs.mp3";
   christmasAudio.loop = true;
-  christmasAudio.volume = 0.6;
-  christmasAudio.preload = "auto"; // 🚀 KEY FIX
-
-  // Force browser to start loading audio
-  christmasAudio.load();
-
-  // Show popup
+  christmasAudio.volume = 0.5;
+  
+  // Show popup after preloader
   setTimeout(() => {
-    popup.classList.add("active");
-  }, 1200);
+    christmasPopup.classList.add("active");
+    // Auto play Christmas music with user interaction fallback
+    const playPromise = christmasAudio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        console.log("Christmas music playing!");
+      }).catch(err => {
+        console.log("Autoplay prevented. Click anywhere to start music.");
+        // If autoplay fails, play on first click
+        document.addEventListener('click', function startMusic() {
+          christmasAudio.play();
+          document.removeEventListener('click', startMusic);
+        }, { once: true });
+      });
+    }
+  }, 1500);
 
-  // First user interaction → play instantly
-  document.addEventListener(
-    "click",
-    function playOnce() {
-      christmasAudio
-        .play()
-        .then(() => console.log("Music playing instantly"))
-        .catch((e) => console.log("Play blocked", e));
+  // Close popup functionality
+  function closeChristmasPopup() {
+    christmasPopup.classList.remove("active");
+    if (christmasAudio) {
+      christmasAudio.pause();
+      christmasAudio.currentTime = 0;
+    }
+  }
 
-      document.removeEventListener("click", playOnce);
-    },
-    { once: true }
-  );
+  christmasClose.addEventListener("click", closeChristmasPopup);
 
-  // Close popup → stop music
-  closeBtn.addEventListener("click", () => {
-    popup.classList.remove("active");
-    christmasAudio.pause();
-    christmasAudio.currentTime = 0;
+  // Allow closing by clicking outside
+  christmasPopup.addEventListener("click", (e) => {
+    if (e.target === christmasPopup) {
+      closeChristmasPopup();
+    }
   });
 });
-
 
 // ========================================
 // PRELOADER
@@ -234,12 +233,8 @@ videoGrid.style.animation = "slideHorizontal 40s linear infinite";
 videoGrid.style.width = "max-content";
 
 // ========================================
+// MUSIC SECTION WITH POPUP PLAYER
 // ========================================
-// MUSIC SECTION WITH POPUP PLAYER (EDITED FOR SMOOTH LOAD)
-// ========================================
-// MUSIC SECTION WITH POPUP PLAYER (MOBILE-FRIENDLY)
-// ========================================
-
 const musicGrid = document.getElementById("musicGrid");
 const musicPopup = document.getElementById("musicPopup");
 const musicPopupClose = document.getElementById("musicPopupClose");
@@ -257,16 +252,10 @@ let isPlaying = false;
 let currentPlayer = null;
 let progressInterval = null;
 
-// Thumbnail overlay for instant feel
-const loadingThumbnail = document.createElement("img");
-loadingThumbnail.id = "loadingThumbnail";
-loadingThumbnail.style.width = "100%";
-loadingThumbnail.style.height = "100%";
-loadingThumbnail.style.objectFit = "cover";
-musicPlayer.appendChild(loadingThumbnail);
-
 // Render music cards
-musicVideos.forEach((video) => {
+const allMusicVideos = [...musicVideos, ...musicVideos];
+
+allMusicVideos.forEach((video) => {
   const musicCard = document.createElement("div");
   musicCard.className = "music-card-slider";
   musicCard.innerHTML = `
@@ -299,16 +288,23 @@ function formatTime(seconds) {
 // Start progress tracking
 function startProgressTracking() {
   if (progressInterval) clearInterval(progressInterval);
+  
   progressInterval = setInterval(() => {
-    if (currentPlayer && currentPlayer.getCurrentTime && currentPlayer.getDuration) {
-      const currentTime = currentPlayer.getCurrentTime();
-      const duration = currentPlayer.getDuration();
-      if (duration > 0) {
-        const progress = (currentTime / duration) * 100;
-        progressBar.style.width = progress + "%";
-        progressInput.value = progress;
-        currentTimeEl.textContent = formatTime(currentTime);
-        durationEl.textContent = formatTime(duration);
+    if (currentPlayer && currentPlayer.getDuration) {
+      try {
+        const currentTime = currentPlayer.getCurrentTime();
+        const duration = currentPlayer.getDuration();
+        
+        if (duration > 0) {
+          const progress = (currentTime / duration) * 100;
+          progressBar.style.width = progress + "%";
+          progressInput.value = progress;
+          
+          currentTimeEl.textContent = formatTime(currentTime);
+          durationEl.textContent = formatTime(duration);
+        }
+      } catch (e) {
+        // Player not ready yet
       }
     }
   }, 500);
@@ -326,100 +322,100 @@ function stopProgressTracking() {
   durationEl.textContent = "0:00";
 }
 
-// Load YouTube API
-function loadYouTubeAPI(callback) {
-  if (window.YT && window.YT.Player) {
-    callback();
-  } else {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-    window.onYouTubeIframeAPIReady = callback;
-  }
-}
-
-// Create YouTube Player
-function createPlayer(videoId) {
-  if (currentPlayer) {
-    currentPlayer.destroy();
-    currentPlayer = null;
-  }
-
-  loadingThumbnail.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-  loadingThumbnail.style.display = "block";
-
-  musicPlayer.innerHTML = "";
-  musicPlayer.appendChild(loadingThumbnail);
-
-  const playerDiv = document.createElement("div");
-  playerDiv.id = "ytplayer";
-  musicPlayer.appendChild(playerDiv);
-
-  currentPlayer = new YT.Player("ytplayer", {
-    height: "0",
-    width: "0",
-    videoId: videoId,
-    playerVars: {
-      autoplay: 1,
-      controls: 0,
-      modestbranding: 1,
-      rel: 0,
-      mute: 1 // muted initially to allow autoplay on mobile
-    },
-    events: {
-      onReady: function (event) {
-        event.target.playVideo();
-        isPlaying = true;
-        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        startProgressTracking();
-        event.target.setVolume(volumeSlider.value);
-
-        // hide thumbnail shortly after ready
-        setTimeout(() => loadingThumbnail.style.display = "none", 300);
-
-        // immediately unmute for mobile after user click (interaction)
-        if (event.target.unMute) event.target.unMute();
-      },
-      onStateChange: function (event) {
-        if (event.data === YT.PlayerState.PLAYING) {
-          isPlaying = true;
-          playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-          startProgressTracking();
-        } else if (event.data === YT.PlayerState.PAUSED) {
-          isPlaying = false;
-          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        } else if (event.data === YT.PlayerState.ENDED) {
-          isPlaying = false;
-          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-          stopProgressTracking();
-        }
-      }
-    }
-  });
-}
-
 // Open music popup
 function openMusicPopup(videoId, title) {
   currentMusicId = videoId;
   currentSongTitle.textContent = title;
   musicPopup.classList.add("active");
   document.body.style.overflow = "hidden";
-
-  loadYouTubeAPI(() => {
-    createPlayer(videoId);
-  });
+  
+  // Load YouTube Player API if not already loaded
+  if (!window.YT) {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+  
+  // Wait for API and create player
+  setTimeout(() => {
+    if (currentPlayer) {
+      currentPlayer.destroy();
+    }
+    
+    // Create a container for the player
+    musicPlayer.innerHTML = "";
+    const playerDiv = document.createElement("div");
+    playerDiv.id = "ytplayer";
+    musicPlayer.appendChild(playerDiv);
+    
+    if (window.YT && window.YT.Player) {
+      currentPlayer = new YT.Player('ytplayer', {
+        height: '0',
+        width: '0',
+        videoId: videoId,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+        },
+        events: {
+          onReady: function(event) {
+            event.target.playVideo();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            startProgressTracking();
+            
+            // Set volume
+            const volume = volumeSlider.value;
+            event.target.setVolume(volume);
+          },
+          onStateChange: function(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              isPlaying = true;
+              playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+              startProgressTracking();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+              isPlaying = false;
+              playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else if (event.data === YT.PlayerState.ENDED) {
+              isPlaying = false;
+              playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+              stopProgressTracking();
+            }
+          }
+        }
+      });
+    } else {
+      // Fallback: use iframe embed
+      musicPlayer.innerHTML = `<iframe id="ytplayer" width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&enablejsapi=1" allow="autoplay" frameborder="0"></iframe>`;
+      isPlaying = true;
+      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      
+      // Simulated progress (since we can't access iframe data without API)
+      let simulatedTime = 0;
+      progressInterval = setInterval(() => {
+        simulatedTime += 0.5;
+        const simulatedDuration = 180; // assume 3 minutes
+        const progress = (simulatedTime / simulatedDuration) * 100;
+        progressBar.style.width = Math.min(progress, 100) + "%";
+        progressInput.value = Math.min(progress, 100);
+        currentTimeEl.textContent = formatTime(simulatedTime);
+        durationEl.textContent = formatTime(simulatedDuration);
+      }, 500);
+    }
+  }, 500);
 }
 
 // Close music popup
 function closeMusicPopup() {
   musicPopup.classList.remove("active");
   document.body.style.overflow = "auto";
-
+  
   if (currentPlayer && currentPlayer.stopVideo) {
     currentPlayer.stopVideo();
     currentPlayer.destroy();
   }
-
+  
   musicPlayer.innerHTML = "";
   currentPlayer = null;
   currentMusicId = null;
@@ -435,16 +431,16 @@ musicPopup.addEventListener("click", (e) => {
 
 // Play/Pause toggle
 playPauseBtn.addEventListener("click", () => {
-  if (!currentPlayer) return;
-  if (isPlaying) {
-    currentPlayer.pauseVideo();
-    isPlaying = false;
-    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-  } else {
-    currentPlayer.playVideo();
-    currentPlayer.unMute(); // ensure sound on mobile
-    isPlaying = true;
-    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+  if (currentPlayer && currentPlayer.getPlayerState) {
+    if (isPlaying) {
+      currentPlayer.pauseVideo();
+      isPlaying = false;
+      playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    } else {
+      currentPlayer.playVideo();
+      isPlaying = true;
+      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    }
   }
 });
 
@@ -452,21 +448,18 @@ playPauseBtn.addEventListener("click", () => {
 progressInput.addEventListener("input", (e) => {
   if (currentPlayer && currentPlayer.getDuration) {
     const duration = currentPlayer.getDuration();
-    if (duration > 0) {
-      const seekTime = (e.target.value / 100) * duration;
-      currentPlayer.seekTo(seekTime, true);
-    }
+    const seekTime = (e.target.value / 100) * duration;
+    currentPlayer.seekTo(seekTime, true);
   }
 });
 
 // Volume control
 volumeSlider.addEventListener("input", (e) => {
+  const volume = e.target.value;
   if (currentPlayer && currentPlayer.setVolume) {
-    currentPlayer.setVolume(e.target.value);
+    currentPlayer.setVolume(volume);
   }
 });
-
-
 
 // ========================================
 // VIDEO MODAL
@@ -585,66 +578,60 @@ setInterval(() => {
 }, 5000);
 
 // ========================================
-// // CONTACT FORM - EMAIL INTEGRATION
-// // ========================================
-// const contactForm = document.getElementById("contactForm");
+// CONTACT FORM - DIRECT EMAIL (MAILTO)
+// ========================================
+const contactForm = document.getElementById("contactForm");
 
-// contactForm.addEventListener("submit", function (e) {
-//   e.preventDefault();
+contactForm.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-//   // Get form values
-//   const name = document.getElementById("name").value.trim();
-//   const email = document.getElementById("email").value.trim();
-//   const message = document.getElementById("message").value.trim();
+  // Get form values
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
 
-//   // Validate form
-//   if (!name || !email || !message) {
-//     showNotification("❌ Please fill in all fields!", "error");
-//     return;
-//   }
+  // Validate form
+  if (!name || !email || !message) {
+    showNotification("❌ Please fill in all fields!", "error");
+    return;
+  }
 
-//   // Validate email format
-//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//   if (!emailRegex.test(email)) {
-//     showNotification("❌ Please enter a valid email address!", "error");
-//     return;
-//   }
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showNotification("❌ Please enter a valid email address!", "error");
+    return;
+  }
 
-//   // Show loading state
-//   const submitBtn = contactForm.querySelector('button[type="submit"]');
-//   const originalText = submitBtn.innerHTML;
-//   submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-//   submitBtn.disabled = true;
+  // Show loading state
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening Email...';
+  submitBtn.disabled = true;
 
-//   // Prepare email parameters
-//   const templateParams = {
-//     from_name: name,
-//     from_email: email,
-//     message: message,
-//     to_email: YOUR_EMAIL,
-//     to_name: "Apurba Goswami"
-//   };
+  // Create mailto link
+  const subject = encodeURIComponent(`New Message from ${name} - Apu Studio`);
+  const body = encodeURIComponent(
+    `Name: ${name}\n` +
+    `Email: ${email}\n\n` +
+    `Message:\n${message}\n\n` +
+    `---\n` +
+    `Sent from Apu Studio Contact Form`
+  );
+  
+  const mailtoLink = `mailto:apurbagoswami211@gmail.com?subject=${subject}&body=${body}`;
 
-//   // Send email using EmailJS
-//   emailjs.send(service_1qpn3m5,template_nqyae7p, templateParams)
-//     .then(
-//       (response) => {
-//         console.log("SUCCESS!", response.status, response.text);
-//         // Success animation
-//         showNotification("✅ Message sent successfully! I'll get back to you soon.", "success");
-//         contactForm.reset();
-//         submitBtn.innerHTML = originalText;
-//         submitBtn.disabled = false;
-//       },
-//       (error) => {
-//         console.error("FAILED...", error);
-//         // Error animation
-//         showNotification("❌ Failed to send message. Please try emailing directly to " + YOUR_EMAIL, "error");
-//         submitBtn.innerHTML = originalText;
-//         submitBtn.disabled = false;
-//       }
-//     );
-// });
+  // Open email client
+  window.location.href = mailtoLink;
+
+  // Show success message
+  setTimeout(() => {
+    showNotification("✅ Email client opened! Please send the email.", "success");
+    contactForm.reset();
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
+  }, 1000);
+});
 
 // Notification function
 function showNotification(message, type) {
