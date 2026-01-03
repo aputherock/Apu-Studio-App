@@ -9,8 +9,10 @@ const YOUR_EMAIL = "apurbagoswami211@gmail.com";
 const videos = [
   { id: "nF9DIkHcHD8", title: "Cinematography 💥|| OFFICIAL VIDEO ||LISTENIFY #dhurandhar" },
   { id: "9zC1Cmmal80", title: "Heartwarming Anniversary Video 🎥✨ ||OFFICIAL VIDEO" },
+     { id: "uSU10FiOB98", title: "প্রকৃতি যেখানে কথা বলে | গ্রামের দৃশ্য||CINEMATOGRAPHY||LISTENIFY" },
   { id: "DtqF4SRmH0g", title: "Anniversary Teaser | A Special Celebration Awaits! 🎉✨" },
   { id: "vKAFEPOtAlk", title: "Adorable Baby Shoot | Cinematic Moments Captured in Pure Joy💘" },
+
 ];
 
 // MUSIC CONFIGURATION
@@ -31,17 +33,23 @@ const musicVideos = [
 const photos = [
   { url: "photography/apu1.jpg", category: "portrait" },
   { url: "photography/biye look.jpeg", category: "portrait" },
-  { url: "photography/view.jpg", category: "nature" },
+   { url: "photography/my pic.jpg", category: "portrait" },
+  { url: "photography/purple.jpg", category: "nature" },
+    { url: "photography/eco park.jpg", category: "nature" },
   { url: "photography/sector v.jpg", category: "nature" },
+  { url: "photography/sea.jpg", category: "nature" },
   { url: "photography/street.jpg", category: "street" },
+   { url: "photography/night photography.jpg", category: "street" },
   { url: "photography/panskura college.jpg", category: "street" },
   { url: "photography/night.jpg", category: "creative" },
-  { url: "photography/white flower.jpg", category: "creative" },
+  { url: "photography/durga.jpg", category: "creative" },
   { url: "photography/ashok .jpg", category: "portrait" },
   { url: "photography/Panjabi.jpg", category: "portrait" },
   { url: "photography/sun set 2.jpg", category: "nature" },
+  { url: "photography/purple2.jpg", category: "nature" },
   { url: "photography/red flower.jpg", category: "street" },
   { url: "photography/moon.jpg", category: "creative" },
+   { url: "photography/white panjabi.jpg", category: "creative" },
 ];
 
 // ========================================
