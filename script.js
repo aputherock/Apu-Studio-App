@@ -7,12 +7,30 @@ const YOUR_EMAIL = "apurbagoswami211@gmail.com";
 
 // VIDEO CONFIGURATION
 const videos = [
-  { id: "nF9DIkHcHD8", title: "Cinematography 💥|| OFFICIAL VIDEO ||LISTENIFY #dhurandhar" },
-  { id: "9zC1Cmmal80", title: "Heartwarming Anniversary Video 🎥✨ ||OFFICIAL VIDEO" },
-     { id: "uSU10FiOB98", title: "প্রকৃতি যেখানে কথা বলে | গ্রামের দৃশ্য||CINEMATOGRAPHY||LISTENIFY" },
-  { id: "DtqF4SRmH0g", title: "Anniversary Teaser | A Special Celebration Awaits! 🎉✨" },
-  { id: "vKAFEPOtAlk", title: "Adorable Baby Shoot | Cinematic Moments Captured in Pure Joy💘" },
-
+  {
+    id: "nF9DIkHcHD8",
+    title: "Cinematography 💥|| OFFICIAL VIDEO ||LISTENIFY #dhurandhar",
+  },
+  {
+    id: "9zC1Cmmal80",
+    title: "Heartwarming Anniversary Video 🎥✨ ||OFFICIAL VIDEO",
+  },
+  {
+    id: "uSU10FiOB98",
+    title: "প্রকৃতি যেখানে কথা বলে | গ্রামের দৃশ্য||CINEMATOGRAPHY||LISTENIFY",
+  },
+  {
+    id: "8pBaQI7kbPU",
+    title: "Cinematic Nature: Where Every Leaf Tells a Story🍃LISTENIFY",
+  },
+  {
+    id: "DtqF4SRmH0g",
+    title: "Anniversary Teaser | A Special Celebration Awaits! 🎉✨",
+  },
+  {
+    id: "vKAFEPOtAlk",
+    title: "Adorable Baby Shoot | Cinematic Moments Captured in Pure Joy💘",
+  },
 ];
 
 // MUSIC CONFIGURATION
@@ -33,13 +51,13 @@ const musicVideos = [
 const photos = [
   { url: "photography/apu1.jpg", category: "portrait" },
   { url: "photography/biye look.jpeg", category: "portrait" },
-   { url: "photography/my pic.jpg", category: "portrait" },
+  { url: "photography/my pic.jpg", category: "portrait" },
   { url: "photography/purple.jpg", category: "nature" },
-    { url: "photography/eco park.jpg", category: "nature" },
+  { url: "photography/eco park.jpg", category: "nature" },
   { url: "photography/sector v.jpg", category: "nature" },
   { url: "photography/sea.jpg", category: "nature" },
   { url: "photography/street.jpg", category: "street" },
-   { url: "photography/night photography.jpg", category: "street" },
+  { url: "photography/night photography.jpg", category: "street" },
   { url: "photography/panskura college.jpg", category: "street" },
   { url: "photography/night.jpg", category: "creative" },
   { url: "photography/durga.jpg", category: "creative" },
@@ -49,7 +67,7 @@ const photos = [
   { url: "photography/purple2.jpg", category: "nature" },
   { url: "photography/red flower.jpg", category: "street" },
   { url: "photography/moon.jpg", category: "creative" },
-   { url: "photography/white panjabi.jpg", category: "creative" },
+  { url: "photography/white panjabi.jpg", category: "creative" },
 ];
 
 // ========================================
@@ -60,30 +78,36 @@ let christmasAudio = null;
 window.addEventListener("load", () => {
   const christmasPopup = document.getElementById("christmasPopup");
   const christmasClose = document.getElementById("christmasClose");
-  
+
   // Create audio element
   christmasAudio = new Audio();
   christmasAudio.src = "Audio/bg songs.mp3";
   christmasAudio.loop = true;
   christmasAudio.volume = 0.5;
-  
+
   // Show popup after preloader
   setTimeout(() => {
     christmasPopup.classList.add("active");
     // Auto play Christmas music with user interaction fallback
     const playPromise = christmasAudio.play();
-    
+
     if (playPromise !== undefined) {
-      playPromise.then(() => {
-        console.log("Christmas music playing!");
-      }).catch(err => {
-        console.log("Autoplay prevented. Click anywhere to start music.");
-        // If autoplay fails, play on first click
-        document.addEventListener('click', function startMusic() {
-          christmasAudio.play();
-          document.removeEventListener('click', startMusic);
-        }, { once: true });
-      });
+      playPromise
+        .then(() => {
+          console.log("Christmas music playing!");
+        })
+        .catch((err) => {
+          console.log("Autoplay prevented. Click anywhere to start music.");
+          // If autoplay fails, play on first click
+          document.addEventListener(
+            "click",
+            function startMusic() {
+              christmasAudio.play();
+              document.removeEventListener("click", startMusic);
+            },
+            { once: true }
+          );
+        });
     }
   }, 1500);
 
@@ -124,7 +148,10 @@ const themeIcon = document.getElementById("theme-icon");
 const savedTheme = localStorage.getItem("theme") || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
-themeIcon.src = savedTheme === "dark" ? "brightness logo/dark.png" : "brightness logo/light.svg";
+themeIcon.src =
+  savedTheme === "dark"
+    ? "brightness logo/dark.png"
+    : "brightness logo/light.svg";
 
 themeToggle.addEventListener("click", () => {
   const currentTheme = document.documentElement.getAttribute("data-theme");
@@ -133,7 +160,10 @@ themeToggle.addEventListener("click", () => {
   document.documentElement.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
 
-  themeIcon.src = newTheme === "dark" ? "brightness logo/dark.png" : "brightness logo/light.svg";
+  themeIcon.src =
+    newTheme === "dark"
+      ? "brightness logo/dark.png"
+      : "brightness logo/light.svg";
 });
 
 // ========================================
@@ -176,7 +206,9 @@ window.addEventListener("scroll", () => {
 
     if (window.scrollY >= top && window.scrollY < top + height) {
       navLinksAll.forEach((link) => link.classList.remove("active"));
-      document.querySelector(`.nav-link[href="#${id}"]`)?.classList.add("active");
+      document
+        .querySelector(`.nav-link[href="#${id}"]`)
+        ?.classList.add("active");
     }
   });
 });
@@ -275,8 +307,10 @@ allMusicVideos.forEach((video) => {
     </div>
     <h3 class="video-title">${video.title}</h3>
   `;
-  
-  musicCard.addEventListener("click", () => openMusicPopup(video.id, video.title));
+
+  musicCard.addEventListener("click", () =>
+    openMusicPopup(video.id, video.title)
+  );
   musicGrid.appendChild(musicCard);
 });
 
@@ -290,24 +324,24 @@ function formatTime(seconds) {
   if (isNaN(seconds) || seconds === 0) return "0:00";
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
 // Start progress tracking
 function startProgressTracking() {
   if (progressInterval) clearInterval(progressInterval);
-  
+
   progressInterval = setInterval(() => {
     if (currentPlayer && currentPlayer.getDuration) {
       try {
         const currentTime = currentPlayer.getCurrentTime();
         const duration = currentPlayer.getDuration();
-        
+
         if (duration > 0) {
           const progress = (currentTime / duration) * 100;
           progressBar.style.width = progress + "%";
           progressInput.value = progress;
-          
+
           currentTimeEl.textContent = formatTime(currentTime);
           durationEl.textContent = formatTime(duration);
         }
@@ -336,48 +370,48 @@ function openMusicPopup(videoId, title) {
   currentSongTitle.textContent = title;
   musicPopup.classList.add("active");
   document.body.style.overflow = "hidden";
-  
+
   // Load YouTube Player API if not already loaded
   if (!window.YT) {
-    const tag = document.createElement('script');
+    const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
+    const firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
-  
+
   // Wait for API and create player
   setTimeout(() => {
     if (currentPlayer) {
       currentPlayer.destroy();
     }
-    
+
     // Create a container for the player
     musicPlayer.innerHTML = "";
     const playerDiv = document.createElement("div");
     playerDiv.id = "ytplayer";
     musicPlayer.appendChild(playerDiv);
-    
+
     if (window.YT && window.YT.Player) {
-      currentPlayer = new YT.Player('ytplayer', {
-        height: '0',
-        width: '0',
+      currentPlayer = new YT.Player("ytplayer", {
+        height: "0",
+        width: "0",
         videoId: videoId,
         playerVars: {
           autoplay: 1,
           controls: 0,
         },
         events: {
-          onReady: function(event) {
+          onReady: function (event) {
             event.target.playVideo();
             isPlaying = true;
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             startProgressTracking();
-            
+
             // Set volume
             const volume = volumeSlider.value;
             event.target.setVolume(volume);
           },
-          onStateChange: function(event) {
+          onStateChange: function (event) {
             if (event.data === YT.PlayerState.PLAYING) {
               isPlaying = true;
               playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -390,15 +424,15 @@ function openMusicPopup(videoId, title) {
               playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
               stopProgressTracking();
             }
-          }
-        }
+          },
+        },
       });
     } else {
       // Fallback: use iframe embed
       musicPlayer.innerHTML = `<iframe id="ytplayer" width="0" height="0" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&enablejsapi=1" allow="autoplay" frameborder="0"></iframe>`;
       isPlaying = true;
       playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-      
+
       // Simulated progress (since we can't access iframe data without API)
       let simulatedTime = 0;
       progressInterval = setInterval(() => {
@@ -418,12 +452,12 @@ function openMusicPopup(videoId, title) {
 function closeMusicPopup() {
   musicPopup.classList.remove("active");
   document.body.style.overflow = "auto";
-  
+
   if (currentPlayer && currentPlayer.stopVideo) {
     currentPlayer.stopVideo();
     currentPlayer.destroy();
   }
-  
+
   musicPlayer.innerHTML = "";
   currentPlayer = null;
   currentMusicId = null;
@@ -500,7 +534,8 @@ const photoGrid = document.getElementById("photoGrid");
 
 function renderPhotos(filter = "all") {
   photoGrid.innerHTML = "";
-  const filteredPhotos = filter === "all" ? photos : photos.filter((p) => p.category === filter);
+  const filteredPhotos =
+    filter === "all" ? photos : photos.filter((p) => p.category === filter);
   const allPhotos = [...filteredPhotos, ...filteredPhotos];
 
   allPhotos.forEach((photo) => {
@@ -614,19 +649,20 @@ contactForm.addEventListener("submit", function (e) {
   // Show loading state
   const submitBtn = contactForm.querySelector('button[type="submit"]');
   const originalText = submitBtn.innerHTML;
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening Email...';
+  submitBtn.innerHTML =
+    '<i class="fas fa-spinner fa-spin"></i> Opening Email...';
   submitBtn.disabled = true;
 
   // Create mailto link
   const subject = encodeURIComponent(`New Message from ${name} - Apu Studio`);
   const body = encodeURIComponent(
     `Name: ${name}\n` +
-    `Email: ${email}\n\n` +
-    `Message:\n${message}\n\n` +
-    `---\n` +
-    `Sent from Apu Studio Contact Form`
+      `Email: ${email}\n\n` +
+      `Message:\n${message}\n\n` +
+      `---\n` +
+      `Sent from Apu Studio Contact Form`
   );
-  
+
   const mailtoLink = `mailto:apurbagoswami211@gmail.com?subject=${subject}&body=${body}`;
 
   // Open email client
@@ -634,7 +670,10 @@ contactForm.addEventListener("submit", function (e) {
 
   // Show success message
   setTimeout(() => {
-    showNotification("✅ Email client opened! Please send the email.", "success");
+    showNotification(
+      "✅ Email client opened! Please send the email.",
+      "success"
+    );
     contactForm.reset();
     submitBtn.innerHTML = originalText;
     submitBtn.disabled = false;
@@ -699,7 +738,9 @@ document.addEventListener("keydown", (e) => {
     closeVideo();
     closeLightbox();
     closeMusicPopup();
-    if (document.getElementById("christmasPopup").classList.contains("active")) {
+    if (
+      document.getElementById("christmasPopup").classList.contains("active")
+    ) {
       document.getElementById("christmasClose").click();
     }
   }
