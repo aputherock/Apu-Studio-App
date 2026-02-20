@@ -309,7 +309,7 @@ allMusicVideos.forEach((video) => {
   `;
 
   musicCard.addEventListener("click", () =>
-    openMusicPopup(video.id, video.title)
+    window.open(`https://www.youtube.com/watch?v=${video.id}`, "_blank")
   );
   musicGrid.appendChild(musicCard);
 });
@@ -744,4 +744,17 @@ document.addEventListener("keydown", (e) => {
       document.getElementById("christmasClose").click();
     }
   }
+});
+
+// ========================================
+// CONTENT PROTECTION
+// ========================================
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("selectstart", (e) => e.preventDefault());
+document.addEventListener("dragstart", (e) => e.preventDefault());
+document.addEventListener("keydown", (e) => {
+  if (e.key === "F12") e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) e.preventDefault();
+  if (e.ctrlKey && e.key.toUpperCase() === "U") e.preventDefault();
+  if (e.ctrlKey && e.key.toUpperCase() === "S") e.preventDefault();
 });
